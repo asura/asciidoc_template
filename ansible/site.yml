@@ -1,0 +1,5 @@
+---
+- hosts: targets
+  connection: local
+  roles:
+  - editor

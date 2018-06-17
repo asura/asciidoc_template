@@ -1,0 +1,32 @@
+- name: ensure exist redpen directory
+  file:
+    path: ../vendor/redpen
+    state: directory
+
+- name: Get latest RedPen version
+  uri:
+    url: 'https://api.github.com/repos/redpen-cc/redpen/releases/latest'
+    return_content: yes
+    body_format: json
+  register: redpen_response
+
+- name: Get RedPen download URL
+  uri:
+    url: '{{ redpen_response.json.assets[0].url }}'
+    headers:
+      Accept: 'application/octet-stream'
+    follow_redirects: no
+    return_content: yes
+    body_format: json
+    status_code: 302
+  register: redpen_url_response
+
+- name: Download latest RedPen
+  get_url:
+    url: '{{ redpen_url_response.location }}'
+    dest: ../vendor/redpen/redpen.tar.gz
+  register: redpen_downloaded
+
+- name: Extract RedPen
+  when: redpen_downloaded.changed
+  command: gtar xzvf ../vendor/redpen/redpen.tar.gz --strip-components=1 -C ../vendor/redpen

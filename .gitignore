@@ -1,3 +1,5 @@
 /result/
 /vendor/bundle/
+/vendor/redpen/
 Gemfile.lock
+ansible/site.retry
