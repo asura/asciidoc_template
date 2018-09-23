@@ -8,6 +8,11 @@ v0.0.1, 2018/06/11
 :sectnums:
 :toclevels: 3
 :toc-title: 目次
+:bibliography: 文献
+ifeval::["{backend}" != "html5"]
+:source-highlighter: coderay
+// rougeよりcoderay
+endif::[]
 
 // 本文
 == はじめに
